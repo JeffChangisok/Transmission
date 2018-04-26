@@ -139,8 +139,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
                             }
                         });
-                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                        startActivity(intent);
+                        jump();
                     }else if(state==0){
                         runOnUiThread(new Runnable() {
                             @Override
@@ -198,8 +197,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             Toast.makeText(getApplicationContext(),"注册成功！",Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                    startActivity(intent);
+                                    jump();
                                 }else{
                                     Log.d(TAG, "onResponse:   注册失败");
                                     runOnUiThread(new Runnable() {
@@ -285,8 +283,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                    startActivity(intent);
+                                    jump();
                                 }else if(state==-1){
                                     Log.d(TAG, "onResponse:   已存在的帐号登录成功");
                                     runOnUiThread(new Runnable() {
@@ -295,8 +292,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                    startActivity(intent);
+                                    jump();
                                 }else {
                                     Log.d(TAG, "onResponse:   快速登录成功");
                                     runOnUiThread(new Runnable() {
@@ -310,9 +306,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         }
                     });
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    jump();
                 } else{
                     // TODO 处理错误的结果
                     runOnUiThread(new Runnable() {
@@ -327,6 +321,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
         // 触发操作
         SMSSDK.submitVerificationCode(country, phone, code);
+    }
+
+    public void jump(){
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
