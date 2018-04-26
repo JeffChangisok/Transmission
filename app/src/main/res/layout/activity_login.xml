@@ -44,11 +44,10 @@
 
     <include android:id="@+id/include_login_qk" layout="@layout/phone" />
 
-    <include android:id="@+id/include_verification" layout="@layout/verification_qk"
+    <include android:id="@+id/include_verification" layout="@layout/verification"
         android:visibility="gone"/>
 
     <include android:id="@+id/include_login_ap" layout="@layout/login_ap"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 </LinearLayout>

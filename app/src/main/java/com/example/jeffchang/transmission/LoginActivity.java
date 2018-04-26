@@ -11,11 +11,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jeffchang.transmission.dao.HttpUtil;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,8 +42,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText et_phone_ap;
     private EditText et_passwd;
     private Button btn_login;
-    private TextView tv_forget;
-    private TextView tv_register;
     final static String TAG = "hhh";
     private String phone = "";
     @Override
@@ -47,18 +55,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         include_login_qk = findViewById(R.id.include_login_qk);
         include_verification = findViewById(R.id.include_verification);
         et_phone = findViewById(R.id.et_phone);
-        btn_confirm_qk = findViewById(R.id.btn_confirm_qk);
-        tv_phone_qk = findViewById(R.id.tv_phone_qk);
-        et_code_qk = findViewById(R.id.et_code_qk);
+        btn_confirm_qk = findViewById(R.id.btn_confirm);
+        tv_phone_qk = findViewById(R.id.tv_phone);
+        et_code_qk = findViewById(R.id.et_code);
         et_phone_ap = findViewById(R.id.et_phone_ap);
         et_passwd = findViewById(R.id.et_passwd);
         btn_login = findViewById(R.id.btn_login);
-        tv_forget = findViewById(R.id.tv_forget);
-        tv_register = findViewById(R.id.tv_register);
         tv_ap.setOnClickListener(this);
         tv_qk.setOnClickListener(this);
         btn_phone.setOnClickListener(this);
         btn_confirm_qk.setOnClickListener(this);
+        btn_login.setOnClickListener(this);
     }
 
     @Override
@@ -97,10 +104,69 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.tv_register:
                 sendCodeWithUI(getApplicationContext());
+                break;
+            case R.id.btn_login:
+                login();
+                break;
                 default:break;
         }
     }
 
+    public void login(){
+        String phone = et_phone_ap.getText().toString().trim();
+        String passwd = et_passwd.getText().toString().trim();
+        String url = "http://yigege.top:8080/portal/user_login.action";
+        RequestBody requestBody = new FormBody.Builder()
+                .add("tel",phone)
+                .add("password",passwd)
+                .build();
+        HttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onFailure:   用户名密码登录请求失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseData = response.body().string();
+                try{
+                    JSONObject jsonObject = new JSONObject(responseData);
+                    int state = jsonObject.getInt("state");
+                    if(state==1){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        startActivity(intent);
+                    }else if(state==0){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),"手机号或密码不正确",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else if(state==-1){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),"手机号未注册",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }catch (Exception e){
+
+                }
+            }
+        });
+    }
+
+    /**
+     * 注册
+     * @param context
+     */
     public void sendCodeWithUI(Context context) {
         RegisterPage page = new RegisterPage();
         page.setRegisterCallback(new EventHandler() {
@@ -110,8 +176,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     HashMap<String,Object> phoneMap = (HashMap<String, Object>) data;
                     String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
                     // TODO 利用国家代码和手机号码进行后续的操作
+                    String url = "http://yigege.top:8080/portal/user_register.action";
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("tel",phone)
+                            .build();
+                    HttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            Log.d(TAG, "onFailure:   请求注册失败");
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String responseData = response.body().string();
+                            try{
+                                JSONObject jsonObject = new JSONObject(responseData);
+                                if(jsonObject.getInt("state")==1){
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(),"注册成功！",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                    startActivity(intent);
+                                }else{
+                                    Log.d(TAG, "onResponse:   注册失败");
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(),"注册失败！",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }catch (Exception e){
+                            }
+                        }
+                    });
                 } else{
                     // TODO 处理错误的结果
+                    Log.d(TAG, "afterEvent:   验证失败");
                 }
             }
         });
@@ -151,13 +255,61 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     // 提交验证码，其中的code表示验证码，如“1357”
-    public void submitCode(String country, String phone, String code) {
+    public void submitCode(String country,final String phone, String code) {
         // 注册一个事件回调，用于处理提交验证码操作的结果
         Log.d(TAG, phone + "   " + code);
         SMSSDK.registerEventHandler(new EventHandler() {
             public void afterEvent(int event, int result, Object data) {
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     // TODO 处理验证成功的结果
+                    String url = "http://yigege.top:8080/portal/user_register.action";
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("tel",phone)
+                            .build();
+                    HttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            Log.d(TAG, "onFailure:   快速登录之注册失败");
+                        }
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String responseData = response.body().string();
+                            try{
+                                JSONObject jsonObject = new JSONObject(responseData);
+                                int state = jsonObject.getInt("state");
+                                if(state==1){
+                                    Log.d(TAG, "onResponse:   新用户登录且注册成功");
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                    startActivity(intent);
+                                }else if(state==-1){
+                                    Log.d(TAG, "onResponse:   已存在的帐号登录成功");
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(),"登录成功！",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                    startActivity(intent);
+                                }else {
+                                    Log.d(TAG, "onResponse:   快速登录成功");
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(),"登录失败！",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }catch (Exception e){
+                            }
+                        }
+                    });
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();

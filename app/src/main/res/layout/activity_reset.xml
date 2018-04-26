@@ -16,9 +16,14 @@
         android:textSize="25dp"
         android:layout_margin="40dp"/>
 
-    <include layout="@layout/phone" />
+    <include android:id="@+id/include_reset_phone" layout="@layout/phone" />
+
+    <include layout="@layout/verification"
+        android:id="@+id/include_reset_verfication"
+        android:visibility="gone"/>
 
     <include layout="@layout/reset_passwd"
+        android:id="@+id/include_reset_passwd"
         android:visibility="gone" />
 
 </LinearLayout>
