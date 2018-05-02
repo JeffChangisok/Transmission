@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
 
-    <include layout="@layout/left_menu"/>
+    <include layout="@layout/left_new_menu"/>
 
     <include layout="@layout/right_content"/>
 

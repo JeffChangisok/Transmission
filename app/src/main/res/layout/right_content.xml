@@ -5,6 +5,26 @@
     android:layout_height="match_parent"
     android:background="#f4f4f4">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/colorPrimary">
+            <ImageButton
+                android:id="@+id/ibtn_openMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_menu"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="传送门"
+                android:textColor="#fff"
+                android:layout_centerInParent="true"
+                android:textSize="30sp"/>
+        </RelativeLayout>
+
+
     <include layout="@layout/jisong"/>
 
     <include layout="@layout/detail"/>
