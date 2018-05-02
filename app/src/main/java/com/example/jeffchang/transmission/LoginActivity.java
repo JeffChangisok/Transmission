@@ -2,6 +2,7 @@ package com.example.jeffchang.transmission;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -93,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 sendCode("86",phone);
                 tv_phone_qk.setText("验证码已发送至"+phone);
                 break;
-            case R.id.btn_confirm_qk:
+            case R.id.btn_confirm:
                 //点击提交
                 String code = et_code_qk.getText().toString().trim();
                 submitCode("86",phone,code);
@@ -190,7 +191,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             String responseData = response.body().string();
                             try{
                                 JSONObject jsonObject = new JSONObject(responseData);
-                                if(jsonObject.getInt("state")==1){
+                                int state = jsonObject.getInt("state");
+                                if(state==1){
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -198,6 +200,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         }
                                     });
                                     jump();
+                                }else if(state==-1){
+                                    Log.d(TAG, "onResponse:   已经被注册");
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(),"手机号已被注册",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }else{
                                     Log.d(TAG, "onResponse:   注册失败");
                                     runOnUiThread(new Runnable() {
@@ -208,6 +218,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     });
                                 }
                             }catch (Exception e){
+                                Log.d(TAG, "onResponse:  "+e.getMessage());
                             }
                         }
                     });
@@ -325,6 +336,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void jump(){
         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        SharedPreferences.Editor editor = getSharedPreferences("data",0).edit();
+        editor.putString("phone",phone);
+        editor.apply();
         startActivity(intent);
         finish();
     }

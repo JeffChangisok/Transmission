@@ -1,6 +1,8 @@
 package com.example.jeffchang.transmission;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jeffchang.transmission.dao.*;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -27,6 +27,7 @@ import okhttp3.Response;
 
 public class resetActivity extends AppCompatActivity implements View.OnClickListener {
 
+    static final String TAG = "hhh";
     private Button btn_phone;
     private EditText et_phone;
     private EditText et_reset;
@@ -64,6 +65,8 @@ public class resetActivity extends AppCompatActivity implements View.OnClickList
         btn_verification.setOnClickListener(this);
     }
 
+
+
     public void sendCode(String country, String phone) {
         // 注册一个事件回调，用于处理发送验证码操作的结果
         SMSSDK.registerEventHandler(new EventHandler() {
@@ -86,7 +89,7 @@ public class resetActivity extends AppCompatActivity implements View.OnClickList
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(),"有问题哦",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"发送验证码时出现问题",Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -107,7 +110,7 @@ public class resetActivity extends AppCompatActivity implements View.OnClickList
                     include_reset_phone.setVisibility(View.GONE);
                     include_reset_verfication.setVisibility(View.GONE);
                     include_reset_passwd.setVisibility(View.VISIBLE);
-                    finish();
+                    include_reset_passwd.setVisibility(View.VISIBLE);
                 } else{
                     // TODO 处理错误的结果
                     runOnUiThread(new Runnable() {
@@ -133,7 +136,7 @@ public class resetActivity extends AppCompatActivity implements View.OnClickList
                 String code = et_code.getText().toString().trim();
                 submitCode("86",myClass.phone,code);break;
             case R.id.btn_reset:
-
+                reset();
         }
     }
 
@@ -148,7 +151,7 @@ public class resetActivity extends AppCompatActivity implements View.OnClickList
         HttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                Log.d(TAG, "onFailure:   请求修改密码失败");
             }
 
             @Override
@@ -174,26 +177,33 @@ public class resetActivity extends AppCompatActivity implements View.OnClickList
                 .add("tel",myClass.phone)
                 .build();
         String url = "http://yigege.top:8080/portal/user_telIsExist.action";
+
         HttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                Log.d(TAG, "onFailure:   请求判断手机号是否存在失败");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String responseData = response.body().toString();
+                String responseData = response.body().string();
+                Log.d(TAG, "user_telIsExist返回的信息:"+responseData);
                 try{
                     JSONObject jo = new JSONObject(responseData);
-                    if(jo.getInt("state")==-1){
-                        token = jo.getJSONObject("user").getString("token");
-                        userId = jo.getJSONObject("user").getString("userID");
+                    if(jo.getInt("state")==1){
+                        token = jo.getJSONObject("result").getString("token");
+                        userId = jo.getJSONObject("result").getString("userId");
                         sendCode("86",myClass.phone);
                     }else{
-                        Toast.makeText(getApplicationContext(),"给手机号并未注册",Toast.LENGTH_SHORT);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),"该手机号并未注册",Toast.LENGTH_SHORT);
+                            }
+                        });
                     }
                 }catch (Exception e){
-
+                    Log.d(TAG, "onResponse:  "+e.getMessage());
                 }
             }
         });

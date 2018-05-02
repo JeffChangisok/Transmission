@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_personal"
+            android:icon="@mipmap/ic_personal"
+            android:title="个人资料"/>
+        <item
+            android:id="@+id/nav_order"
+            android:icon="@mipmap/ic_order"
+            android:title="订单中心"/>
+        <item
+            android:id="@+id/nav_wallet"
+            android:icon="@mipmap/ic_wallet"
+            android:title="我的钱包"/>
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@mipmap/ic_order"
+            android:title="设置"/>
+    </group>
+</menu>
