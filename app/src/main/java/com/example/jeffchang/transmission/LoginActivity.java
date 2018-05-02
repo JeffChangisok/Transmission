@@ -3,6 +3,7 @@ package com.example.jeffchang.transmission;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -335,10 +336,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void jump(){
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-        SharedPreferences.Editor editor = getSharedPreferences("data",0).edit();
+        SharedPreferences.Editor editor = PreferenceManager
+                .getDefaultSharedPreferences(LoginActivity.this)
+                .edit();
         editor.putString("phone",phone);
         editor.apply();
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
         startActivity(intent);
         finish();
     }
