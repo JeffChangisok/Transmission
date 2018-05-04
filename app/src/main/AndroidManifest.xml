@@ -19,7 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PersonalActivity"></activity>
+        <activity android:name=".PersonalActivity" />
+        <activity android:name=".FillInfoActivity" />
+        <activity android:name=".AddressActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".PriceIntroduceActivity"></activity>
     </application>
 
 </manifest>

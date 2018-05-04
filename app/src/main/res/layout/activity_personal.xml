@@ -13,7 +13,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorPrimary">
         <ImageButton
-            android:id="@+id/ibtn_openMenu"
+            android:id="@+id/ibtn_personal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@mipmap/ic_back"
@@ -27,64 +27,117 @@
             android:textSize="30sp"/>
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
         <TextView
             android:layout_marginStart="13dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
             android:text="名称"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
+            />
 
-    <RelativeLayout
+        <EditText
+
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="30dp"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:textSize="16sp"
+            android:text="传送门用户15071817422"
+            />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="45dp"
+        android:gravity="center_vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
             android:layout_marginStart="13dp"
-            android:text="电话"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
+            android:text="电话" />
+        <TextView
+            android:id="@+id/tv_personal_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="150****7422"
+            android:textSize="16sp"/>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="45dp"
+        android:gravity="center_vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
             android:layout_marginStart="13dp"
-            android:text="性别"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
+            android:text="性别" />
+        <TextView
+            android:id="@+id/tv_personal_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="男"
+            android:textSize="16sp"/>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="45dp"
+        android:gravity="center_vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
             android:layout_marginStart="13dp"
-            android:text="邮箱"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
+            android:text="邮箱" />
 
-    <RelativeLayout
+        <EditText
+            android:id="@+id/tv_personal_email"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="30dp"
+            android:inputType="textEmailAddress"
+            android:text="774840576@qq.com"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_personal_address"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:onClick="onClick">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
             android:layout_marginStart="13dp"
-            android:text="地址"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
+            android:text="地址" />
+        <TextView
+            android:id="@+id/tv_personal_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text=""
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_personal"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确认"/>
 
 </LinearLayout>

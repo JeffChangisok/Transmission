@@ -5,12 +5,16 @@
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:layout_marginTop="30dp">
+
     <LinearLayout
+        android:id="@+id/ll_big_ji"
+        android:clickable="true"
+        android:onClick="onAddressClick"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginBottom="10dp"
-        android:gravity="center">
+        android:gravity="center_vertical">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -29,7 +33,17 @@
             android:layout_height="fill_parent"
             android:background="#90909090"/>
 
+        <TextView
+            android:id="@+id/tv_ji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="填写寄件信息"
+            android:layout_marginStart="15dp"
+            android:textSize="15sp"/>
+
         <LinearLayout
+            android:id="@+id/ll_ji"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="vertical"
@@ -57,11 +71,14 @@
         android:background="#90909090"/>
 
     <LinearLayout
+        android:id="@+id/ll_big_song"
+        android:clickable="true"
+        android:onClick="onAddressClick"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center">
+        android:gravity="center_vertical">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -80,11 +97,21 @@
             android:layout_height="fill_parent"
             android:background="#90909090"/>
 
+        <TextView
+            android:id="@+id/tv_song"
+            android:layout_marginStart="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="填写收件信息"
+            android:textSize="15sp"/>
+
         <LinearLayout
+            android:id="@+id/ll_song"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:visibility="gone">
             <TextView
                 android:id="@+id/tv_song_1"
                 android:layout_width="wrap_content"

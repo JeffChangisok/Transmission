@@ -2,18 +2,17 @@ package com.example.jeffchang.transmission;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.brioal.swipemenu.view.SwipeMenu;
 import com.example.jeffchang.transmission.dao.MyMenuItem;
@@ -26,15 +25,23 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SwipeMenu mMainSwipemenu;
-    private ImageButton btn_openMenu;
+    private LinearLayout ll_ji;
+    private LinearLayout ll_song;
+    private TextView tv_ji;
+    private TextView tv_song;
     private List<MyMenuItem> itemList = new ArrayList<>();
     final static String TAG = "hhh";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImageButton btn_openMenu;
         mMainSwipemenu = findViewById(R.id.main_swipemenu);
         btn_openMenu = findViewById(R.id.ibtn_openMenu);
+        ll_ji = findViewById(R.id.ll_ji);
+        ll_song = findViewById(R.id.ll_song);
+        tv_ji = findViewById(R.id.tv_ji);
+        tv_song = findViewById(R.id.tv_song);
         final NavigationView navView = findViewById(R.id.nav_view);
         /*个位代表的旋转动画效果序号,十位代表透明度动画效果,
           千位代表缩放动画效果,万位代表位移动画效果,
@@ -65,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case 2:
                         break;
                     case 3:
+                        Intent intent1 = new Intent(MainActivity.this,SettingsActivity.class);
+                        startActivity(intent1);
                         break;
                 }
             }
@@ -96,6 +105,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.ibtn_openMenu:
                 mMainSwipemenu.showMenu();
+                break;
+            case R.id.tv_price_introduce:
+                Intent intent = new Intent(MainActivity.this,PriceIntroduceActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    public void onAddressClick(View v){
+        Intent intent = new Intent(MainActivity.this,FillInfoActivity.class);
+        switch (v.getId()){
+            case R.id.ll_big_ji:
+                intent.putExtra("jiOrSong","ji");
+                startActivityForResult(intent,1);
+                break;
+            case R.id.ll_big_song:
+                intent.putExtra("jiOrSong","song");
+                startActivityForResult(intent,2);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:
+                if(resultCode == RESULT_OK){
+                    String address = data.getStringExtra("address");
+                    String building = data.getStringExtra("building");
+                    String name = data.getStringExtra("name");
+                    String phone = data.getStringExtra("phone");
+                    tv_ji.setVisibility(View.GONE);
+                    ll_ji.setVisibility(View.VISIBLE);
+                }
+                break;
+            case 2:
+                if(resultCode == RESULT_OK){
+                    String address = data.getStringExtra("address");
+                    String building = data.getStringExtra("building");
+                    String name = data.getStringExtra("name");
+                    String phone = data.getStringExtra("phone");
+                    tv_song.setVisibility(View.GONE);
+                    ll_song.setVisibility(View.VISIBLE);
+                }
                 break;
         }
     }
