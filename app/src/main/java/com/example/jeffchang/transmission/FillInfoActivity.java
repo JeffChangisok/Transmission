@@ -59,7 +59,7 @@ public class FillInfoActivity extends AppCompatActivity implements View.OnClickL
                 String building = etBuilding.getText().toString().trim();
                 String name = etName.getText().toString().trim();
                 String phone = etPhone.getText().toString().trim();
-                if(address.equals("")||building.equals("")||name.equals("")||phone.equals("")){
+                if(address.equals("")||name.equals("")||phone.equals("")){
                     Toast.makeText(getApplicationContext(),"请填写完整",Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent();

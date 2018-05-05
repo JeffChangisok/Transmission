@@ -19,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_centerInParent="true"
                 android:layout_margin="10dp"
                 android:src="@drawable/ji1"/>
@@ -33,35 +33,46 @@
             android:layout_height="fill_parent"
             android:background="#90909090"/>
 
-        <TextView
-            android:id="@+id/tv_ji"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="填写寄件信息"
-            android:layout_marginStart="15dp"
-            android:textSize="15sp"/>
+            android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/ll_ji"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
             <TextView
-                android:id="@+id/tv_ji_1"
+                android:id="@+id/tv_ji"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="地区+街道"/>
-            <TextView
-                android:id="@+id/tv_ji_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="姓名+手机号"/>
+                android:text="填写寄件信息"
+                android:layout_marginStart="15dp"
+                android:layout_centerVertical="true"
+                android:textSize="15sp" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:visibility="invisible"
+                android:id="@+id/ll_ji"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+                android:layout_marginStart="15dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/tv_ji_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="地区+街道"
+                    />
+                <TextView
+                    android:id="@+id/tv_ji_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="姓名+手机号"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -83,8 +94,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_centerInParent="true"
                 android:layout_margin="10dp"
                 android:src="@drawable/song1"/>
@@ -97,35 +108,43 @@
             android:layout_height="fill_parent"
             android:background="#90909090"/>
 
-        <TextView
-            android:id="@+id/tv_song"
-            android:layout_marginStart="15dp"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="填写收件信息"
-            android:textSize="15sp"/>
+            android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/ll_song"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:visibility="gone">
             <TextView
-                android:id="@+id/tv_song_1"
+                android:id="@+id/tv_song"
+                android:layout_marginStart="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="地区+街道"
-                android:textSize="18sp"/>
-            <TextView
-                android:id="@+id/tv_song_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="姓名+手机号"/>
+                android:layout_centerVertical="true"
+                android:text="填写收件信息"
+                android:textSize="15sp"/>
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_song"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginStart="15dp"
+                android:visibility="invisible">
+                <TextView
+                    android:id="@+id/tv_song_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="地区+街道"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/tv_song_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="姓名+手机号"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

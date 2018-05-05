@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import android.widget.AdapterView;
@@ -29,6 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout ll_song;
     private TextView tv_ji;
     private TextView tv_song;
+    private TextView tv_ji_1;
+    private TextView tv_ji_2;
+    private TextView tv_song_1;
+    private TextView tv_song_2;
     private List<MyMenuItem> itemList = new ArrayList<>();
     final static String TAG = "hhh";
     @Override
@@ -42,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ll_song = findViewById(R.id.ll_song);
         tv_ji = findViewById(R.id.tv_ji);
         tv_song = findViewById(R.id.tv_song);
+        tv_ji_1 = findViewById(R.id.tv_ji_1);
+        tv_ji_2 = findViewById(R.id.tv_ji_2);
+        tv_song_1 = findViewById(R.id.tv_song_1);
+        tv_song_2 = findViewById(R.id.tv_song_2);
         final NavigationView navView = findViewById(R.id.nav_view);
         /*个位代表的旋转动画效果序号,十位代表透明度动画效果,
           千位代表缩放动画效果,万位代表位移动画效果,
@@ -137,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String name = data.getStringExtra("name");
                     String phone = data.getStringExtra("phone");
                     tv_ji.setVisibility(View.GONE);
+                    tv_ji_1.setText(address+" "+building);
+                    tv_ji_2.setText(name+" "+phone);
                     ll_ji.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -148,6 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String phone = data.getStringExtra("phone");
                     tv_song.setVisibility(View.GONE);
                     ll_song.setVisibility(View.VISIBLE);
+                    tv_song_1.setText(address+""+building);
+                    tv_song_2.setText(name+" "+phone);
                 }
                 break;
         }
