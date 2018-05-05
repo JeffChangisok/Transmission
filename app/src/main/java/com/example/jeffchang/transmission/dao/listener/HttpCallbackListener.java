@@ -1,4 +1,4 @@
-package com.example.jeffchang.transmission.dao;
+package com.example.jeffchang.transmission.dao.listener;
 
 public interface HttpCallbackListener {
     void onFinish(String response);

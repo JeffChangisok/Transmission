@@ -1,8 +1,10 @@
-package com.example.jeffchang.transmission.dao;
+package com.example.jeffchang.transmission.utils;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+
+import com.example.jeffchang.transmission.dao.listener.HttpCallbackListener;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -13,8 +15,6 @@ import java.net.URL;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-
-import static com.mob.tools.gui.BitmapProcessor.start;
 
 
 public class HttpUtil {

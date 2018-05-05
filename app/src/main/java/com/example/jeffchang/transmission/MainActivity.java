@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.View;
 
 import android.widget.AdapterView;
@@ -14,10 +13,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brioal.swipemenu.view.SwipeMenu;
 import com.example.jeffchang.transmission.dao.MyMenuItem;
-import com.example.jeffchang.transmission.dao.MenuItemAdapter;
+import com.example.jeffchang.transmission.dao.adapter.MenuItemAdapter;
+import com.example.jeffchang.transmission.dao.TypeBean;
+import com.example.jeffchang.transmission.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tv_ji_2;
     private TextView tv_song_1;
     private TextView tv_song_2;
+    private TextView tv_weight;
+    private ImageButton ibtn_type;
+    private ImageButton ibtn_weight;
+    private ImageButton ibtn_time;
+    private ArrayList<TypeBean> weightList = new ArrayList<>();
     private List<MyMenuItem> itemList = new ArrayList<>();
     final static String TAG = "hhh";
     @Override
@@ -51,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_ji_2 = findViewById(R.id.tv_ji_2);
         tv_song_1 = findViewById(R.id.tv_song_1);
         tv_song_2 = findViewById(R.id.tv_song_2);
+        tv_weight = findViewById(R.id.tv_weight);
+        ibtn_type = findViewById(R.id.ibtn_type);
+        ibtn_weight = findViewById(R.id.ibtn_weight);
+        ibtn_time = findViewById(R.id.ibtn_time);
         final NavigationView navView = findViewById(R.id.nav_view);
         /*个位代表的旋转动画效果序号,十位代表透明度动画效果,
           千位代表缩放动画效果,万位代表位移动画效果,
@@ -60,10 +71,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mMainSwipemenu.setStartAlpha(0.7f);
         mMainSwipemenu.setStartScale(0.7f);
         btn_openMenu.setOnClickListener(this);
+        ibtn_type.setOnClickListener(this);
+        ibtn_weight.setOnClickListener(this);
+        ibtn_time.setOnClickListener(this);
         /*
           侧滑菜单
          */
-        initMenuItem();
+        initData();
         MenuItemAdapter adapter = new MenuItemAdapter(MainActivity.this,
                 R.layout.list_item_menu,itemList);
         ListView listView = findViewById(R.id.lv_menu);
@@ -119,6 +133,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(MainActivity.this,PriceIntroduceActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.ibtn_type:
+                break;
+            case R.id.ibtn_weight:
+                Util.alertBottomWheelOption(MainActivity.this, weightList, new Util.OnWheelViewClick() {
+                    @Override
+                    public void onClick(View view, int position) {
+                        tv_weight.setText(weightList.get(position).getName());
+                    }
+                });
+                break;
+            case R.id.ibtn_time:
+                break;
         }
     }
 
@@ -166,11 +192,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void initMenuItem(){
+    private void initData(){
+        /*
+         初始化侧滑菜单显示数据
+         */
         itemList.add(new MyMenuItem("个人资料",R.mipmap.ic_personal));
         itemList.add(new MyMenuItem("订单中心",R.mipmap.ic_order));
         itemList.add(new MyMenuItem("我的钱包",R.mipmap.ic_wallet));
         itemList.add(new MyMenuItem("设置",R.mipmap.ic_setting));
+        /*
+         初始化重量数据
+         */
+        weightList.add(new TypeBean(0,"5公斤以下"));
+        for(int i = 1;i < 20;i++){
+            weightList.add(new TypeBean(i,i+"公斤"));
+        }
     }
 
 }

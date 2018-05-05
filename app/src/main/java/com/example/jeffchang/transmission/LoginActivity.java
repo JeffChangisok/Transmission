@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jeffchang.transmission.dao.HttpUtil;
+import com.example.jeffchang.transmission.utils.HttpUtil;
 
 import org.json.JSONObject;
 

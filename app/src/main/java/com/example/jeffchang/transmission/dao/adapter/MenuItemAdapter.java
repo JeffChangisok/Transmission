@@ -1,4 +1,4 @@
-package com.example.jeffchang.transmission.dao;
+package com.example.jeffchang.transmission.dao.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.jeffchang.transmission.R;
+import com.example.jeffchang.transmission.dao.MyMenuItem;
 
 import java.util.List;
 
