@@ -23,7 +23,8 @@
         <activity android:name=".FillInfoActivity" />
         <activity android:name=".AddressActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".PriceIntroduceActivity"></activity>
+        <activity android:name=".PriceIntroduceActivity" />
+        <activity android:name=".TypeActivity"></activity>
     </application>
 
 </manifest>

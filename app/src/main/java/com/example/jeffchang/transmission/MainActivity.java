@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import android.widget.AdapterView;
@@ -43,6 +44,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<TypeBean> weightList = new ArrayList<>();
     private List<MyMenuItem> itemList = new ArrayList<>();
     final static String TAG = "hhh";
+    String address_ji;
+    String building_ji;
+    String name_ji;
+    String phone_ji;
+    String address_song;
+    String building_song;
+    String name_song;
+    String phone_song;
+    String type_name;
+    String note;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,12 +145,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.ibtn_type:
+                Intent intent1 = new Intent(MainActivity.this,TypeActivity.class);
+                startActivityForResult(intent1,3);
                 break;
             case R.id.ibtn_weight:
                 Util.alertBottomWheelOption(MainActivity.this, weightList, new Util.OnWheelViewClick() {
                     @Override
                     public void onClick(View view, int position) {
                         tv_weight.setText(weightList.get(position).getName());
+                        Log.d(TAG, "onClick: ..."+weightList.get(position).getName()+"...");
                     }
                 });
                 break;
@@ -167,26 +181,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (requestCode){
             case 1:
                 if(resultCode == RESULT_OK){
-                    String address = data.getStringExtra("address");
-                    String building = data.getStringExtra("building");
-                    String name = data.getStringExtra("name");
-                    String phone = data.getStringExtra("phone");
+                    address_ji = data.getStringExtra("address");
+                    building_ji = data.getStringExtra("building");
+                    name_ji = data.getStringExtra("name");
+                    phone_ji = data.getStringExtra("phone");
                     tv_ji.setVisibility(View.GONE);
-                    tv_ji_1.setText(address+" "+building);
-                    tv_ji_2.setText(name+" "+phone);
+                    tv_ji_1.setText(address_ji+" "+building_ji);
+                    tv_ji_2.setText(name_ji+" "+phone_ji);
                     ll_ji.setVisibility(View.VISIBLE);
                 }
                 break;
             case 2:
                 if(resultCode == RESULT_OK){
-                    String address = data.getStringExtra("address");
-                    String building = data.getStringExtra("building");
-                    String name = data.getStringExtra("name");
-                    String phone = data.getStringExtra("phone");
+                    address_song = data.getStringExtra("address");
+                    building_song = data.getStringExtra("building");
+                    name_song = data.getStringExtra("name");
+                    phone_song = data.getStringExtra("phone");
                     tv_song.setVisibility(View.GONE);
                     ll_song.setVisibility(View.VISIBLE);
-                    tv_song_1.setText(address+""+building);
-                    tv_song_2.setText(name+" "+phone);
+                    tv_song_1.setText(address_song+""+building_song);
+                    tv_song_2.setText(name_song+" "+phone_song);
+                }
+                break;
+            case 3:
+                if(resultCode == RESULT_OK){
+
                 }
                 break;
         }
