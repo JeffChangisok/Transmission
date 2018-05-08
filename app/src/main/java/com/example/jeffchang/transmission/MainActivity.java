@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,10 +39,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tv_song_1;
     private TextView tv_song_2;
     private TextView tv_weight;
+    private TextView tv_time;
+    private Button btn_pay;
     private ImageButton ibtn_type;
     private ImageButton ibtn_weight;
     private ImageButton ibtn_time;
     private ArrayList<TypeBean> weightList = new ArrayList<>();
+    private ArrayList<TypeBean> timeList = new ArrayList<>();
     private List<MyMenuItem> itemList = new ArrayList<>();
     final static String TAG = "hhh";
     String address_ji;
@@ -73,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ibtn_type = findViewById(R.id.ibtn_type);
         ibtn_weight = findViewById(R.id.ibtn_weight);
         ibtn_time = findViewById(R.id.ibtn_time);
+        tv_time = findViewById(R.id.tv_time);
+        btn_pay = findViewById(R.id.btn_pay);
         final NavigationView navView = findViewById(R.id.nav_view);
         /*个位代表的旋转动画效果序号,十位代表透明度动画效果,
           千位代表缩放动画效果,万位代表位移动画效果,
@@ -158,6 +164,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
                 break;
             case R.id.ibtn_time:
+                Util.alertBottomWheelOption(MainActivity.this, timeList, new Util.OnWheelViewClick() {
+                    @Override
+                    public void onClick(View view, int position) {
+                        tv_time.setText(timeList.get(position).getName());
+                    }
+                });
+                break;
+            case R.id.btn_pay:
+                Intent intent2 = new Intent(MainActivity.this,PayActivity.class);
+                startActivity(intent2);
                 break;
         }
     }
@@ -223,9 +239,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          初始化重量数据
          */
         weightList.add(new TypeBean(0,"5公斤以下"));
-        for(int i = 1;i < 20;i++){
+        for(int i = 6;i < 20;i++){
             weightList.add(new TypeBean(i,i+"公斤"));
         }
+        /*
+         初始化取件时间数据
+         */
+        timeList.add(new TypeBean(0,"自送"));
+        timeList.add(new TypeBean(1,"十五分钟后"));
+        timeList.add(new TypeBean(2,"三十分钟后"));
+        timeList.add(new TypeBean(3,"一小时后"));
+        timeList.add(new TypeBean(4,"两小时后"));
+        timeList.add(new TypeBean(5,"三小时后"));
     }
 
 }

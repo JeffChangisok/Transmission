@@ -24,7 +24,8 @@
         <activity android:name=".AddressActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".PriceIntroduceActivity" />
-        <activity android:name=".TypeActivity"></activity>
+        <activity android:name=".TypeActivity" />
+        <activity android:name=".PayActivity"></activity>
     </application>
 
 </manifest>
